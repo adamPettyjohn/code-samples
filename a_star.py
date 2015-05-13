@@ -82,6 +82,7 @@ def astar(input_file):
 
     # The main A* code will be here. Best of luck :)
     # Thanks :)
+    # ============Code I Wrote===================
 
     # these are the lists that contain the nodes that have states
     open_nodes = [] # states not yet expanded
@@ -178,7 +179,7 @@ def find_valid_children(state,nodes,lines,obstacles,goal):
 
     return children
 
-
+# ============End Code I Wrote===================
 
 
 # This function determines if the move from p0 to p1 is valid or not.
