@@ -1,2 +1,2 @@
 # code-samples
-some examples of code I have written
+These are some samples of code I have written.  I currently have samples of Java, Python, and C uploaded.  These particular projects I have chosen to upload are assighnments that I completed while attending The University of Washington.  I chose these as opposed to personal projects because they are examples of code that was completed with strict requirements and purpose completed with a firm deadline in mind.
