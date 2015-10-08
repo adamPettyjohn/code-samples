@@ -101,8 +101,9 @@ public class Player : NetworkBehaviour {
         UpdateWeapon();
     }
 
-	//Update the weapon and attempt to spawn the player
-	void Start () {
+    //Update the weapon and attempt to spawn the player
+    void Start ()
+    {
         GameObject tempAim = (GameObject)Instantiate(aimer, transform.position, transform.rotation);
         tempAim.transform.parent = transform;
 
@@ -157,7 +158,8 @@ public class Player : NetworkBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update () 
+    {
 	Move ();
 	Attack ();
     	CastAbilities();
@@ -177,15 +179,17 @@ public class Player : NetworkBehaviour {
     }
 
 	//anything that needs counting goes here
-	void DecreaseCounts() {
-		if (currentAttackCoolDown > 0f) {
-			currentAttackCoolDown -= Time.deltaTime;
-		}
+    void DecreaseCounts() 
+    {
+	if (currentAttackCoolDown > 0f) 
+	{
+	    currentAttackCoolDown -= Time.deltaTime;
+	}
         if(currentJumpCooldown > 0f)
         {
             currentJumpCooldown -= Time.deltaTime;
         }
-	}
+    }
 
     //player ability code
     void CastAbilities()
@@ -214,33 +218,37 @@ public class Player : NetworkBehaviour {
 
     }
 
-	//player basic attack code
-	void Attack () {
-		if (currentAttackCoolDown <= 0f && !isSwinging) {
-			if(Input.GetButtonDown("A_1") && !doingAction) {
-                doingAction = true;
+    //player basic attack code
+    void Attack () 
+    {
+	if (currentAttackCoolDown <= 0f && !isSwinging) 
+	{
+	    if(Input.GetButtonDown("A_1") && !doingAction) 
+	    {
+            	doingAction = true;
 
-                //currentSword.GetComponent<Blade>().swingSound.Play();
-                CmdTellServerPlaySound(gameObject, "swordSwing");
+            	CmdTellServerPlaySound(gameObject, "swordSwing");
 
-				currentSword.transform.position = new Vector3 (gameObject.transform.position.x, gameObject.transform.position.y + attackRadius, 0f);
-                currentSword.transform.rotation = Quaternion.identity;
-				currentSword.transform.RotateAround (gameObject.transform.position, Vector3.forward, faceAngle - (attackAngle / 2f));
-                //currentSword.GetComponent<SpriteRenderer>().enabled = true;
-                currentSword.GetComponent<BoxCollider2D>().enabled = true;
+	    	currentSword.transform.position = new Vector3 (gameObject.transform.position.x, gameObject.transform.position.y + attackRadius, 0f);
+            	currentSword.transform.rotation = Quaternion.identity;
+	    	currentSword.transform.RotateAround (gameObject.transform.position, Vector3.forward, faceAngle - (attackAngle / 2f));
+        
+            	currentSword.GetComponent<BoxCollider2D>().enabled = true;
 
-				totalTravel = 0f;
-				currentAttackCoolDown = attackCoolDown;
-                isSwinging = true;
-			}
-		}
+	    	totalTravel = 0f;
+            	currentAttackCoolDown = attackCoolDown;
+            	isSwinging = true;
+	    }
+	}
 
-		if (isSwinging) {
-			currentSword.transform.RotateAround (gameObject.transform.position, Vector3.forward, attackSpeed * Time.deltaTime);
-			totalTravel += attackSpeed * Time.deltaTime;
+	if (isSwinging) 
+	{
+	    currentSword.transform.RotateAround (gameObject.transform.position, Vector3.forward, attackSpeed * Time.deltaTime);
+	    totalTravel += attackSpeed * Time.deltaTime;
 			
-			//the swing has finished
-			if(totalTravel > attackAngle) {
+	    //the swing has finished
+	    if(totalTravel > attackAngle) 
+	    {
                 //currentSword.GetComponent<SpriteRenderer>().enabled = false;
                 currentSword.GetComponent<BoxCollider2D>().enabled = false;
                 isSwinging = false;
@@ -248,21 +256,23 @@ public class Player : NetworkBehaviour {
 
                 doingAction = false;
             }
-		}
 	}
+    }
 
-	//code that deals with moveing the player
-	void Move() {
-		//first get the inputs
-		float h = Input.GetAxis ("L_XAxis_1");
-		float v = -Input.GetAxis ("L_YAxis_1");
+    //code that deals with moveing the player
+    void Move() 
+    {
+    	//first get the inputs
+	float h = Input.GetAxis ("L_XAxis_1");
+	float v = -Input.GetAxis ("L_YAxis_1");
 
         Vector2 move;
 
-		//now we check to see if its in our sensitivty (this prevents stick drift)
-		if (Mathf.Abs (h) < 0.3f && Mathf.Abs (v) < 0.3f) {
-			h = 0f;
-			v = 0f;
+	//now we check to see if its in our sensitivty (this prevents stick drift)
+	if (Mathf.Abs (h) < 0.3f && Mathf.Abs (v) < 0.3f) 
+	{
+		h = 0f;
+		v = 0f;
         } 
 
         move = new Vector2(h, v);
@@ -273,18 +283,18 @@ public class Player : NetworkBehaviour {
             move.Normalize();
         }
 		
-		
-		
-		//do the rotation, only if we moved (again so theres no drift)
-		if (Mathf.Abs(h) > 0f || Mathf.Abs(v) > 0f) {
-			float angle = Mathf.Atan2 (move.x, move.y) * Mathf.Rad2Deg;
-			Vector3 pAngles = new Vector3 (0f, 0f, -angle);
+	//do the rotation, only if we moved (again so theres no drift)
+	if (Mathf.Abs(h) > 0f || Mathf.Abs(v) > 0f) 
+	{
+	    float angle = Mathf.Atan2 (move.x, move.y) * Mathf.Rad2Deg;
+	    Vector3 pAngles = new Vector3 (0f, 0f, -angle);
 
-			if(!isSwinging) {
-				gameObject.transform.rotation = Quaternion.Euler (pAngles);
-				faceAngle = -angle;
-			}
-		}
+	    if(!isSwinging) 
+	    {
+		gameObject.transform.rotation = Quaternion.Euler (pAngles);
+		faceAngle = -angle;
+            }
+	}
 
         float holdStill = Input.GetAxis("TriggersL_1");
         float jumpAmount = Input.GetAxis("TriggersR_1");
@@ -317,13 +327,13 @@ public class Player : NetworkBehaviour {
 
         //now we move the object
         if (!isSwinging && holdStill < 0.3f)
-	        {
-	            gameObject.GetComponent<Rigidbody2D>().velocity = move * speed * abilityMovementModifier;
-	        } else
-	        {
-	            gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-	        }
+	{
+	    gameObject.GetComponent<Rigidbody2D>().velocity = move * speed * abilityMovementModifier;
+	} else
+	{
+	    gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 	}
+    }
 
  
 
