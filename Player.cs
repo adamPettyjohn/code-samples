@@ -18,20 +18,20 @@ public class Player : NetworkBehaviour {
     public float startHealth;
     public float startEnergy;
 
-	//basic variables
-	public float speed;
-	public float faceAngle;
+    //basic variables
+    public float speed;
+    public float faceAngle;
 
     //basic attack variable, these are derived from the weapon and thus
     //should not be directly modified
-	private float attackWindUp;
+    private float attackWindUp;
     private float attackRadius;
     private float attackAngle;
     private float attackSpeed;
     private float attackCoolDown;
 
     //The weapon slot on the player
-	public GameObject currentSword;
+    public GameObject currentSword;
 
     //The ability slots on the player
     public GameObject ability1;
@@ -48,10 +48,10 @@ public class Player : NetworkBehaviour {
     
     private float energy;
 
-	//counting variables used by the player class to keep track of things,
+    //counting variables used by the player class to keep track of things,
     //do not modify directly
-	private float currentAttackCoolDown;
-	private float totalTravel;
+    private float currentAttackCoolDown;
+    private float totalTravel;
     private bool isSwinging;
     private GameObject spawner;
 
@@ -156,14 +156,14 @@ public class Player : NetworkBehaviour {
         }
     }
 
-	// Update is called once per frame
-	void Update () {
-		Move ();
-		Attack ();
-    CastAbilities();
-		DecreaseCounts ();
-    CheckHealth();
-	}
+    // Update is called once per frame
+    void Update () {
+	Move ();
+	Attack ();
+    	CastAbilities();
+	DecreaseCounts ();
+    	CheckHealth();
+    }
 
     //We check to see if we died. If we did we reset our health and respawn
     void CheckHealth()
@@ -317,12 +317,12 @@ public class Player : NetworkBehaviour {
 
         //now we move the object
         if (!isSwinging && holdStill < 0.3f)
-        {
-            gameObject.GetComponent<Rigidbody2D>().velocity = move * speed * abilityMovementModifier;
-        } else
-        {
-            gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        }
+	        {
+	            gameObject.GetComponent<Rigidbody2D>().velocity = move * speed * abilityMovementModifier;
+	        } else
+	        {
+	            gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+	        }
 	}
 
  
